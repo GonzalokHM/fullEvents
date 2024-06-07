@@ -108,3 +108,35 @@ export async function getAttendeesByEventId(eventId) {
     return [];
   }
 }
+
+export async function getAttendees() {
+  try {
+    const response = await fetch(`${API_URL}/api/attendees`);
+    if (!response.ok) {
+      console.error('Error en la respuesta de getAttendees:', response.statusText);
+      throw new Error('Error al obtener asistentes');
+    }
+    const attendees = await response.json();
+    console.log('Datos de los asistentes:', attendees); // Mensaje de depuración
+    return attendees;
+  } catch (error) {
+    console.error('Error en getAttendees:', error);
+    return [];
+  }
+}
+
+export async function getAttendeesSortedByName() {
+  try {
+    const response = await fetch(`${API_URL}/api/attendees/order/sortedName`);
+    if (!response.ok) {
+      console.error('Error en la respuesta de getAttendeesSortedByName:', response.statusText);
+      throw new Error('Error al obtener asistentes ordenados por nombre');
+    }
+    const attendees = await response.json();
+    console.log('Datos de los asistentes ordenados por nombre:', attendees); // Mensaje de depuración
+    return attendees;
+  } catch (error) {
+    console.error('Error en getAttendeesSortedByName:', error);
+    return [];
+  }
+}

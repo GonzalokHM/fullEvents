@@ -1,11 +1,13 @@
 import { Home } from '../pages/Home';
 import { LoginRegister } from '../pages/LogRegister';
 import { CreateEvent } from '../pages/CreateEvent';
+import { Attendees } from '../pages/Attendees';
 
 const routes = [
   { text: 'Home', func: Home },
   { text: 'Create Event', func: CreateEvent },
-  { text: 'Login/Register', func: LoginRegister }
+  { text: 'Login/Register', func: LoginRegister },
+  {text: 'Attendees', func: Attendees }
 ];
 
 export const Header = () => {
