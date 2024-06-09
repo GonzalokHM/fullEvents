@@ -1,16 +1,21 @@
 import { getEvents } from '../api';
 import { EventDetails } from './EventDetail';
+import { LoginRegister } from './LogRegister';
 
 export const Home = async () => {
   if (!localStorage.getItem('token')) {
     LoginRegister();
-    return
-  } else {
-    `<h3>Welcome User</h3>`
+    return;
   }
+
+  const user = JSON.parse(localStorage.getItem('user')); // Obtener la información del usuario
 
   const main = document.querySelector("main");
   main.innerHTML = "";
+
+  const welcomeMessage = document.createElement("h3");
+  welcomeMessage.textContent = `Welcome ${user.name}`;
+  main.appendChild(welcomeMessage);
 
   const events = await getEvents();
   const eventsDiv = document.createElement("div");

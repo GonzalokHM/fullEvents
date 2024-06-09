@@ -42,8 +42,9 @@ const submitLogin = async (email, password) => {
   const data = await loginApi(email, password);
   if (data && data.token) {
     localStorage.setItem("token", data.token);
-    Home();
+    localStorage.setItem("user", JSON.stringify(data.user)); // Guardar la información del usuario
     Header();
+    Home();
   } else {
     alert('Error al iniciar sesión');
   }
@@ -68,12 +69,37 @@ const Register = (elementoPadre) => {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    submitRegister(inputName.value, inputEmail.value, inputPass.value);
+    const name = inputName.value;
+    const email = inputEmail.value;
+    const password = inputPass.value;
+    
+    if (!validateEmail(email)) {
+      alert('El email debe contener "@" y "."');
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      alert('La contraseña debe tener al menos 8 caracteres, una mayúscula y un número');
+      return;
+    }
+
+    submitRegister(name, email, password);
   });
 };
 
-const submitRegister = async (name, email, password) => {
-  const data = await registerApi(name, email, password);
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+const validatePassword = (password) => {
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  return passwordRegex.test(password);
+};
+
+
+const submitRegister = async () => {
+
   if (data) {
     alert('Registro exitoso. Ahora puedes iniciar sesión.');
     LoginRegister();
