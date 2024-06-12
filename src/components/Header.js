@@ -18,9 +18,18 @@ export const Header = () => {
     const a = document.createElement("a");
     a.href = "#";
     a.textContent = route.text;
-    a.addEventListener("click", route.func);
+    a.addEventListener("click", () =>{
+      if (!localStorage.getItem('token') && route.text !== 'Login/Register') {
+        alert('Please log in to access this section.');
+        return;
+      }
+      route.func();
+    });
     nav.appendChild(a);
   });
+
+  header.appendChild(nav);
+
 
   const authLink = document.createElement("a");
   authLink.href = "#";

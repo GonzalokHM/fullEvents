@@ -42,16 +42,21 @@ export async function getEvents() {
 }
 }
 
+export async function getEventsByOrganizer(organizerId) {
+  const response = await fetch(`${API_URL}/api/events/findOrganizerByid/${organizerId}`, {
+    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+  });
+  return response.json();
+}
+
 export async function getEventById(id) {
   try {
   const response = await fetch(`${API_URL}/api/events/${id}`)
-  console.log('Estado de la respuesta:', response.status);
   if (!response.ok) {
     console.error('Error en la respuesta de getEventById:', response.statusText);
     throw new Error('Error al obtener evento');
   }
   const event = await response.json();
-  console.log('Datos del evento:', event); // Mensaje de depuración
   return event;
 } catch (error) {
   console.error('Error en getEventById:',error);
@@ -101,7 +106,6 @@ export async function getAttendeesByEventId(eventId) {
       throw new Error('Error al obtener los asistentes del evento');
     }
     const attendees = await response.json();
-    console.log('Datos de los asistentes:', attendees); // Mensaje de depuración
     return attendees;
   } catch (error) {
     console.error('Error en getAttendeesByEventId:', error);
@@ -117,7 +121,6 @@ export async function getAttendees() {
       throw new Error('Error al obtener asistentes');
     }
     const attendees = await response.json();
-    console.log('Datos de los asistentes:', attendees); // Mensaje de depuración
     return attendees;
   } catch (error) {
     console.error('Error en getAttendees:', error);
@@ -133,7 +136,6 @@ export async function getAttendeesSortedByName() {
       throw new Error('Error al obtener asistentes ordenados por nombre');
     }
     const attendees = await response.json();
-    console.log('Datos de los asistentes ordenados por nombre:', attendees); // Mensaje de depuración
     return attendees;
   } catch (error) {
     console.error('Error en getAttendeesSortedByName:', error);

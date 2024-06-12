@@ -16,7 +16,6 @@ export const Attendees = async () => {
 
     const renderAttendees = (attendees) => {
       const attendeesHtml =`
-        <button id="toggle-sort">Ordenar por Nombre</button>
         <div id="attendees-list">
           ${attendees.map(attendee => `
             <div class="attendee" data-id="${attendee._id}">
@@ -39,20 +38,9 @@ export const Attendees = async () => {
         </div>
       `;
 
-      main.innerHTML = attendeesHtml;
+      main.querySelector('#attendees-container').innerHTML = attendeesHtml;
 
-      const sortButton = document.getElementById('toggle-sort');
-      sortButton.addEventListener('click', async () => {
-        sortedByName = !sortedByName;
-        if (sortedByName) {
-          attendees = await getAttendeesSortedByName();
-          sortButton.textContent = 'Ordenar por Llegada';
-        } else {
-          attendees = await getAttendees();
-          sortButton.textContent = 'Ordenar por Nombre';
-        }
-        renderAttendees(attendees);
-      });
+
 
       const attendeeElements = document.querySelectorAll('.attendee');
       attendeeElements.forEach(attendeeElement => {
@@ -69,6 +57,23 @@ export const Attendees = async () => {
         });
       });
     };
+
+    main.innerHTML = `
+    <button id="toggle-sort">Name order</button>
+    <div id="attendees-container"></div>
+  `;
+  const sortButton = document.getElementById('toggle-sort');
+  sortButton.addEventListener('click', async () => {
+    sortedByName = !sortedByName;
+    if (sortedByName) {
+      attendees = await getAttendeesSortedByName();
+      sortButton.textContent = 'First come';
+    } else {
+      attendees = await getAttendees();
+      sortButton.textContent = 'Name order';
+    }
+    renderAttendees(attendees);
+  });
 
     renderAttendees(attendees);
   } catch (error) {

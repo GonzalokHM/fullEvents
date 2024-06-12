@@ -2,19 +2,31 @@ import { Home } from './Home';
 import { Header } from '../components/Header';
 import { registerApi, loginApi } from '../api';
 
-export const LoginRegister = () => {
+export const LoginRegister = (showLogin = true) => {
   const main = document.querySelector("main");
   main.innerHTML = "";
 
+  const container = document.createElement("div");
+  container.className = "auth-container";
+  
+  
   const loginDiv = document.createElement("div");
   loginDiv.id = "login";
-  Login(loginDiv);
-
+  if (showLogin) Login(loginDiv);
+  
   const registerDiv = document.createElement("div");
   registerDiv.id = "register";
-  Register(registerDiv);
+  if (!showLogin) Register(registerDiv);
+  
+  container.append(loginDiv, registerDiv);
+  const toggleButton = document.createElement("button");
+  toggleButton.textContent = showLogin ? "Register" : "Login";
+  toggleButton.addEventListener("click", () => {
+    LoginRegister(!showLogin);
+  });
 
-  main.append(loginDiv, registerDiv);
+  container.appendChild(toggleButton);
+  main.appendChild(container)
 };
 
 const Login = (elementoPadre) => {
@@ -23,13 +35,15 @@ const Login = (elementoPadre) => {
   const inputUN = document.createElement("input");
   const inputPass = document.createElement("input");
   const button = document.createElement("button");
+  const or = document.createElement("p");
 
   inputPass.type = "password";
   inputUN.placeholder = "Email";
   inputPass.placeholder = "*****";
   button.textContent = "Login";
+  or.textContent = "or";
 
-  form.append(inputUN, inputPass, button);
+  form.append(inputUN, inputPass, button, or);
   elementoPadre.append(form);
 
   form.addEventListener("submit", (e) => {
@@ -57,14 +71,16 @@ const Register = (elementoPadre) => {
   const inputEmail = document.createElement("input");
   const inputPass = document.createElement("input");
   const button = document.createElement("button");
+  const or = document.createElement("p");
 
   inputName.placeholder = "Name";
   inputEmail.placeholder = "Email";
   inputPass.type = "password";
   inputPass.placeholder = "*****";
   button.textContent = "Register";
+  or.textContent = "or";
 
-  form.append(inputName, inputEmail, inputPass, button);
+  form.append(inputName, inputEmail, inputPass, button, or);
   elementoPadre.append(form);
 
   form.addEventListener("submit", (e) => {
@@ -98,11 +114,11 @@ const validatePassword = (password) => {
 };
 
 
-const submitRegister = async () => {
-
+const submitRegister = async (name, email, password) => {
+  const data = await registerApi(name, email, password);
   if (data) {
     alert('Registro exitoso. Ahora puedes iniciar sesión.');
-    LoginRegister();
+    LoginRegister(true);
   } else {
     alert('Error al registrar');
   }
