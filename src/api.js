@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4001'; // Cambiar a 'https://full1.vercel.app' en producción
+const API_URL = 'https://fullbackevents.vercel.app/'; // Cambiar a 'http://localhost:4001' para desarrollo
 
 export async function loginApi(email, password) {
   try {
