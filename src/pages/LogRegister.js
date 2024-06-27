@@ -131,7 +131,7 @@ const validatePassword = (password) => {
 
 const submitRegister = async (name, email, password) => {
   const data = await registerApi(name, email, password);
-  if (data) {
+  if (data && !data.error) {
     alert('Registro exitoso. Ahora puedes iniciar sesión.');
     LoginRegister(true);
   } else {
