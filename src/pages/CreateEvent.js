@@ -15,7 +15,7 @@ export const CreateEvent = () => {
     <input type="text" name="title" placeholder="Título" required>
     <input type="datetime-local" name="date" required>
     <input type="text" name="location" placeholder="Ubicación" required>
-    <textarea name="description" placeholder="Descripción" required></textarea>
+    <textarea class="description" name="description" placeholder="Descripción" required></textarea>
     <button type="submit">Crear</button>
   `;
 

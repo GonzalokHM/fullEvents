@@ -206,6 +206,11 @@ display: ruby-text;
   grid-column: span 2;
 }
 
+.description{
+  width: -webkit-fill-available;
+  height: 45px;
+}
+
 /* Media queries para responsividad */
 @media (max-width: 768px) {
   header {
