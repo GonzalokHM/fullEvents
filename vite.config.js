@@ -4,12 +4,13 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-    // target desarrollo
-    target: 'https://fullbackevents.vercel.app',
     // target despliegue
+    target: 'https://fullbackevents.vercel.app',
+    // target desarrollo
         // target: 'http://localhost:4001',
         
         changeOrigin: true,
+        secure: false,
       },
     },
   },
