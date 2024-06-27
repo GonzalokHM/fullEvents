@@ -48,7 +48,9 @@ const Login = (elementoPadre) => {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    submitLogin(inputUN.value, inputPass.value);
+    submitLogin(inputUN.value, inputPass.value).finally(() => {
+      button.disabled = false;
+    });
   });
 };
 
@@ -99,7 +101,9 @@ const Register = (elementoPadre) => {
       return;
     }
 
-    submitRegister(name, email, password);
+    submitRegister(name, email, password).finally(() => {
+      button.disabled = false;
+    });
   });
 };
 

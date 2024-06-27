@@ -16,9 +16,9 @@ export const Attendees = async () => {
 
     const renderAttendees = (attendees) => {
       const attendeesHtml =`
-        <div id="attendees-list">
+        <div id="attendees-list" class="grid-container">
           ${attendees.map(attendee => `
-            <div class="attendee" data-id="${attendee._id}">
+            <div class="attendee grid-item" data-id="${attendee._id}">
               <h4>${attendee.name}</h4>
               <div class="attendee-details" style="display: none;">
                 <p>Email: ${attendee.email}</p>
@@ -51,8 +51,10 @@ export const Attendees = async () => {
               detail.style.display = 'none';
             });
             details.style.display = 'block';
+            attendeeElement.classList.add('expanded');
           } else {
             details.style.display = 'none';
+            attendeeElement.classList.remove('expanded');
           }
         });
       });

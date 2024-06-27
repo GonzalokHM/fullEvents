@@ -1,49 +1,3 @@
-/* :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  justify-content: center;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-/* header */
-
-/* header {
-  margin: 15px;
-}
-
-nav {
-  display: flex;
-  justify-content: space-around;
-}  */
-
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -215,8 +169,22 @@ form button {
   flex-direction: column;
   align-items: center;
 }
+#attendees-container{
+  margin-bottom: 50px;
+}
 #attendees-list{
-  display: ruby-text;
+display: ruby-text;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.grid-item {
+  border: 1px solid #ccc;
+  padding: 16px;
+  transition: all 0.3s ease;
 }
 
 .attendee-details {
@@ -224,6 +192,18 @@ form button {
   padding: 10px;
   border-radius: 5px;
   margin-top: 10px;
+}
+
+/* .attendee-details {
+  display: none;
+} */
+
+.grid-item.expanded .attendee-details {
+  display: block;
+}
+
+.grid-item.expanded {
+  grid-column: span 2;
 }
 
 /* Media queries para responsividad */
