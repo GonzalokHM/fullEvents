@@ -5,7 +5,7 @@ export default defineConfig({
     proxy: {
       '/api': {
     // target desarrollo
-    target: 'https://fullback1.vercel.app',
+    target: 'https://fullbackevents.vercel.app',
     // target despliegue
         // target: 'http://localhost:4001',
         
