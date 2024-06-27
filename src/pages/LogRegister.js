@@ -67,7 +67,7 @@ const submitLogin = async (email, password) => {
     Header();
     Home();
   } else {
-    alert('Error al iniciar sesión');
+    alert('Error al iniciar sesión' + (data.error || 'Error desconocido'));
   }
 };
 
@@ -135,6 +135,6 @@ const submitRegister = async (name, email, password) => {
     alert('Registro exitoso. Ahora puedes iniciar sesión.');
     LoginRegister(true);
   } else {
-    alert('Error al registrar');
+    alert('Error al registrar' + (data.error || 'Error desconocido'));
   }
 };

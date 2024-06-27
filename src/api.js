@@ -7,11 +7,14 @@ export async function loginApi(email, password) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
-    if (!response.ok) throw new Error('Error al iniciar sesión');
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Error al iniciar sesión');
+    }
     return response.json();
   } catch (error) {
     console.error(error);
-    return null;
+    return { error: error.message };
   }
 }
 
@@ -22,11 +25,14 @@ export async function registerApi(name, email, password) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, email, password }),
   });
-  if (!response.ok) throw new Error('Error al registrar');
+  if (!response.ok) {    
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Error al registrar');
+  }
   return response.json();
 } catch (error) {
   console.error(error);
-  return null;
+  return {error: error.message};
 }
 }
 
