@@ -38,6 +38,11 @@ const Login = (elementoPadre) => {
   const or = document.createElement("p");
 
   inputPass.type = "password";
+  inputUN.id = "login-email";
+  inputUN.name = "email";
+  inputPass.type = "password";
+  inputPass.id = "login-password";
+  inputPass.name = "password";
   inputUN.placeholder = "Email";
   inputPass.placeholder = "*****";
   button.textContent = "Login";
@@ -76,8 +81,14 @@ const Register = (elementoPadre) => {
   const or = document.createElement("p");
 
   inputName.placeholder = "Name";
+  inputName.name = "name";
+  inputName.placeholder = "Name";
+  inputEmail.id = "register-email";
+  inputEmail.name = "email";
   inputEmail.placeholder = "Email";
   inputPass.type = "password";
+  inputPass.id = "register-password";
+  inputPass.name = "password";
   inputPass.placeholder = "*****";
   button.textContent = "Register";
   or.textContent = "or";
