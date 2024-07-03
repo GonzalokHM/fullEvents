@@ -132,8 +132,7 @@ const validatePassword = (password) => {
 const submitRegister = async (name, email, password) => {
   const data = await registerApi(name, email, password);
   if (data && !data.error) {
-    alert('Registro exitoso. Ahora puedes iniciar sesión.');
-    LoginRegister(true);
+    submitLogin(email, password);
   } else {
     alert('Error al registrar' + (data.error || 'Error desconocido'));
   }

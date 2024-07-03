@@ -12,17 +12,27 @@ const routes = [
 export const Header = () => {
   const header = document.querySelector("header");
   header.innerHTML = "";
-  const nav = document.createElement("nav");
 
-  routes.forEach(route => {
+  const isAuthenticated = !!localStorage.getItem('token');
+
+    // Create the hamburger icon
+    const burger = document.createElement("div");
+    burger.classList.add("burger");
+    burger.innerHTML = `
+      <div></div>
+      <div></div>
+      <div></div>
+    `;
+  const nav = document.createElement("nav");
+  nav.classList.add("nav-links");
+
+  routes
+  .filter(route => isAuthenticated || route.text === 'Login/Register')
+  .forEach(route => {
     const a = document.createElement("a");
     a.href = "#";
     a.textContent = route.text;
     a.addEventListener("click", () =>{
-      if (!localStorage.getItem('token') && route.text !== 'Login/Register') {
-        alert('Please log in to access this section.');
-        return;
-      }
       route.func();
     });
     nav.appendChild(a);
@@ -34,7 +44,7 @@ export const Header = () => {
   const authLink = document.createElement("a");
   authLink.href = "#";
 
-  if (localStorage.getItem('token')) {
+  if (isAuthenticated) {
     authLink.textContent = "Logout";
     authLink.addEventListener("click", (e) => {
       e.preventDefault();
@@ -53,5 +63,12 @@ export const Header = () => {
 
   nav.appendChild(authLink);
 
+  header.appendChild(burger);
   header.appendChild(nav);
+  
+  // Add toggle functionality for the burger icon
+  burger.addEventListener("click", () => {
+    nav.classList.toggle("nav-active");
+    burger.classList.toggle("toggle");
+  });
 };
