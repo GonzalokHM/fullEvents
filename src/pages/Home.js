@@ -12,19 +12,19 @@ export const Home = async () => {
 
   const main = document.querySelector('main');
   main.innerHTML = '';
-  
-    const loading = document.createElement('div');
-    loading.className = 'loading-container';
-    main.appendChild(loading);
 
-    const spinner = document.createElement('div');
-    spinner.className = 'spinner';
-    loading.appendChild(spinner);
+  const loading = document.createElement('div');
+  loading.className = 'loading-container';
+  main.appendChild(loading);
 
   const welcomeMessage = document.createElement('h3');
   welcomeMessage.id = 'welcomH3';
   welcomeMessage.textContent = `Welcome ${user.name}`;
   loading.appendChild(welcomeMessage);
+
+  const spinner = document.createElement('div');
+  spinner.className = 'spinner';
+  loading.appendChild(spinner);
 
   spinner.style.display = 'block';
 
