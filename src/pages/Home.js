@@ -12,14 +12,25 @@ export const Home = async () => {
 
   const main = document.querySelector('main');
   main.innerHTML = '';
+  
+    const loading = document.createElement('div');
+    loading.className = 'loading-container';
+    main.appendChild(loading);
+
+    const spinner = document.createElement('div');
+    spinner.className = 'spinner';
+    loading.appendChild(spinner);
 
   const welcomeMessage = document.createElement('h3');
   welcomeMessage.id = 'welcomH3';
   welcomeMessage.textContent = `Welcome ${user.name}`;
-  main.appendChild(welcomeMessage);
+  loading.appendChild(welcomeMessage);
+
+  spinner.style.display = 'block';
 
   try {
     const events = await getEvents();
+    spinner.style.display = 'none';
 
     const organizersMap = new Map();
 
@@ -85,7 +96,7 @@ export const Home = async () => {
     };
 
     const attachEventDetailListeners = (backTo) => {
-      document.querySelectorAll('.event .show-more').forEach(button => {
+      document.querySelectorAll('.event .show-more').forEach((button) => {
         button.addEventListener('click', (e) => {
           const eventId = e.target.closest('.event').getAttribute('data-id');
           EventDetails(eventId, backTo);
@@ -94,10 +105,12 @@ export const Home = async () => {
     };
 
     const setupOrganizerListeners = () => {
-      document.querySelectorAll('.organizer').forEach(organizerElement => {
+      document.querySelectorAll('.organizer').forEach((organizerElement) => {
         organizerElement.addEventListener('click', async () => {
+          spinner.style.display = 'block';
           const organizerId = organizerElement.getAttribute('data-id');
           const organizerEvents = await getEventsByOrganizer(organizerId);
+          spinner.style.display = 'none';
           main.innerHTML = `
             <button id="back-to-organizers" class="back-button">⬅ Back to Organizers</button>
             <div class="events">
@@ -123,7 +136,9 @@ export const Home = async () => {
 
           attachEventDetailListeners(() => {
             const renderBackToOrganizers = async () => {
+              spinner.style.display = 'block';
               const organizerEvents = await getEventsByOrganizer(organizerId);
+              spinner.style.display = 'none';
               main.innerHTML = `
                 <button id="back-to-organizers" class="back-button">⬅ Back to Organizers</button>
                 <div class="events">
