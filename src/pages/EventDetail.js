@@ -33,13 +33,17 @@ export const EventDetails = async (id, backTo) => {
     const confirmButton = document.getElementById('confirm-attendance');
 
     // Verificar si el usuario ya ha confirmado su asistencia
-    const attendees = await getAttendeesByEventId(id);
-    const userId = JSON.parse(localStorage.getItem('user')).id;
-    const isAttending = attendees.some(attendee => attendee.id === userId);
+    try {
+      const attendees = await getAttendeesByEventId(id);
+      const userEmail = JSON.parse(localStorage.getItem('user')).email;
+      const isAttending = attendees.some(attendee => attendee.email === userEmail);
 
-    if (isAttending) {
-      confirmButton.textContent = 'Cancel Attendance';
-      confirmButton.style.backgroundColor = 'red';
+      if (isAttending) {
+        confirmButton.textContent = 'Cancel Attendance';
+        confirmButton.style.backgroundColor = 'red';
+      }
+    } catch (error) {
+      console.error('Error al verificar la asistencia:', error);
     }
 
     confirmButton.addEventListener('click', async () => {
@@ -55,7 +59,7 @@ export const EventDetails = async (id, backTo) => {
         alert('Cancelled attendance');
       }
     });
-    
+
     document
       .getElementById('show-attendees')
       .addEventListener('click', async () => {

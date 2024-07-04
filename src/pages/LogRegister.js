@@ -48,13 +48,22 @@ const Login = (elementoPadre) => {
   button.textContent = "Login";
   or.textContent = "or";
 
-  form.append(inputUN, inputPass, button, or);
+    // loading...
+    const spinner = document.createElement("div");
+    spinner.className = "spinner";
+    spinner.style.display = "none";
+
+  form.append(inputUN, inputPass, button, or,spinner);
   elementoPadre.append(form);
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+    button.disabled = true;
+    spinner.style.display = "block";
+
     submitLogin(inputUN.value, inputPass.value).finally(() => {
       button.disabled = false;
+      spinner.style.display = "none";
     });
   });
 };

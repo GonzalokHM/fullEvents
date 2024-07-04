@@ -7,6 +7,8 @@ body {
 }
 
 header {
+  display: flex;
+  justify-content: center;
   background-color: #4caf50;
   color: white;
   padding: 15px 20px;
@@ -122,8 +124,12 @@ form {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  width: 500px;
   margin: auto;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 form input {
@@ -132,6 +138,7 @@ form input {
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
+  text-align: center;
 }
 
 form button {
@@ -238,6 +245,7 @@ form button {
 }
 
 .spinner {
+  justify-content: center;
   border: 4px solid rgba(0, 0, 0, 0.1);
   width: 36px;
   height: 36px;
@@ -263,7 +271,7 @@ form button {
   }
 
   form {
-    max-width: 100%;
+    width: 381px;
     margin: 10px;
   }
 
@@ -306,6 +314,12 @@ form button {
   nav a {
     margin: 5px 0;
     text-align: center;
+    padding: 9px 10px;
+    color: #002f02;
+  }
+
+  form{
+    width: 325px;
   }
 
   .burger.toggle div:nth-child(1) {
@@ -326,6 +340,7 @@ form button {
 
   form {
     padding: 15px;
+    width: 240px;
   }
 
   .event,
