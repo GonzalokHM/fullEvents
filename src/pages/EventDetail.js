@@ -32,6 +32,24 @@ export const EventDetails = async (id, backTo) => {
 
     const confirmButton = document.getElementById('confirm-attendance');
 
+    // Función para actualizar la lista de asistentes
+    const updateAttendeesList = async () => {
+      const attendeesListDiv = document.getElementById('attendees-list');
+      const attendees = await getAttendeesByEventId(id);
+      if (attendees && attendees.length > 0) {
+        attendeesListDiv.innerHTML = `
+          <h4>Attendees:</h4>
+          <ul>
+            ${attendees.map((attendee) => `<li>${attendee.name} (${attendee.email})</li>`).join('')}
+          </ul>
+        `;
+      } else {
+        attendeesListDiv.innerHTML = '<p>No attendees for this event.</p>';
+      }
+      attendeesListDiv.style.display = 'block';
+    };
+
+
     // Verificar si el usuario ya ha confirmado su asistencia
     try {
       const attendees = await getAttendeesByEventId(id);
@@ -43,7 +61,7 @@ export const EventDetails = async (id, backTo) => {
         confirmButton.style.backgroundColor = 'red';
       }
     } catch (error) {
-      console.error('Error al verificar la asistencia:', error);
+      console.error('Failed to verify attendance:', error);
     }
 
     confirmButton.addEventListener('click', async () => {
@@ -58,6 +76,10 @@ export const EventDetails = async (id, backTo) => {
         confirmButton.style.backgroundColor = '';
         alert('Cancelled attendance');
       }
+      // Actualizar la lista de asistentes
+      if (document.getElementById('attendees-list').style.display === 'block') {
+        await updateAttendeesList();
+      }
     });
 
     document
@@ -65,30 +87,15 @@ export const EventDetails = async (id, backTo) => {
       .addEventListener('click', async () => {
         const attendeesListDiv = document.getElementById('attendees-list');
         if (attendeesListDiv.style.display === 'none') {
-          const attendees = await getAttendeesByEventId(id);
-          if (attendees && attendees.length > 0) {
-            attendeesListDiv.innerHTML = `
-          <h4>Asistentes:</h4>
-          <ul>
-            ${attendees
-              .map(
-                (attendee) => `<li>${attendee.name} (${attendee.email})</li>`
-              )
-              .join('')}
-          </ul>
-        `;
-          } else {
-            attendeesListDiv.innerHTML =
-              '<p>No hay asistentes para este evento.</p>';
-          }
-          attendeesListDiv.style.display = 'block';
+          await updateAttendeesList();
         } else {
           attendeesListDiv.style.display = 'none';
         }
       });
+
       document.getElementById('back-to-events').addEventListener('click', backTo);
   } catch (error) {
-    console.error('Error al cargar el evento:', error);
+    console.error('Event Loading Failed:', error);
     main.innerHTML = '<p>Event Loading Failed!</p>';
   }
 };
