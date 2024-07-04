@@ -1,4 +1,4 @@
-import { getEventById, confirmAttendance, getAttendeesByEventId } from '../api';
+import { getEventById, confirmAttendance, getAttendeesByEventId, cancelAttendance } from '../api';
 
 export const EventDetails = async (id, backTo) => {
   if (!localStorage.getItem('token')) {
@@ -11,7 +11,7 @@ export const EventDetails = async (id, backTo) => {
     const event = await getEventById(id);
 
     if (!event) {
-      main.innerHTML = '<p>Error al cargar el evento.</p>';
+      main.innerHTML = '<p>Event Loading Failed!</p>';
       return;
     }
 
@@ -23,19 +23,39 @@ export const EventDetails = async (id, backTo) => {
     <p>📆${event.date}</p>
     <p>📍${event.location}</p>
     <p>ℹ️${event.description}</p>
-    <button id="confirm-attendance">Confirmar Asistencia</button>
-    <button id="show-attendees">Lista de Asistentes</button>
+    <button id="confirm-attendance">Confirm Attendance</button>
+    <button id="show-attendees">List of Attendees</button>
       <div id="attendees-list" style="display: none;"></div>
   `;
     main.innerHTML = ''; // Limpiar el mensaje de carga
     main.appendChild(eventDiv);
 
-    document
-      .getElementById('confirm-attendance')
-      .addEventListener('click', async () => {
+    const confirmButton = document.getElementById('confirm-attendance');
+
+    // Verificar si el usuario ya ha confirmado su asistencia
+    const attendees = await getAttendeesByEventId(id);
+    const userId = JSON.parse(localStorage.getItem('user')).id;
+    const isAttending = attendees.some(attendee => attendee.id === userId);
+
+    if (isAttending) {
+      confirmButton.textContent = 'Cancel Attendance';
+      confirmButton.style.backgroundColor = 'red';
+    }
+
+    confirmButton.addEventListener('click', async () => {
+      if (confirmButton.textContent === 'Confirm Attendance') {
         await confirmAttendance(id);
-        alert('Asistencia confirmada');
-      });
+        confirmButton.textContent = 'Cancel Attendance';
+        confirmButton.style.backgroundColor = 'red';
+        alert('Confirmed attendance');
+      } else {
+        await cancelAttendance(id);
+        confirmButton.textContent = 'Confirm Attendance';
+        confirmButton.style.backgroundColor = '';
+        alert('Cancelled attendance');
+      }
+    });
+    
     document
       .getElementById('show-attendees')
       .addEventListener('click', async () => {
@@ -65,6 +85,6 @@ export const EventDetails = async (id, backTo) => {
       document.getElementById('back-to-events').addEventListener('click', backTo);
   } catch (error) {
     console.error('Error al cargar el evento:', error);
-    main.innerHTML = '<p>Error al cargar el evento.</p>';
+    main.innerHTML = '<p>Event Loading Failed!</p>';
   }
 };

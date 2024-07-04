@@ -67,7 +67,7 @@ const submitLogin = async (email, password) => {
     Header();
     Home();
   } else {
-    alert('Error al iniciar sesión' + (data.error || 'Error desconocido'));
+    alert('Failed to login' + (data.error || 'Unknown error'));
   }
 };
 
@@ -93,27 +93,40 @@ const Register = (elementoPadre) => {
   button.textContent = "Register";
   or.textContent = "or";
 
-  form.append(inputName, inputEmail, inputPass, button, or);
+  // loading...
+  const spinner = document.createElement("div");
+  spinner.className = "spinner";
+  spinner.style.display = "none";
+
+
+  form.append(inputName, inputEmail, inputPass, button, or, spinner);
   elementoPadre.append(form);
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+    button.disabled = true;
+    spinner.style.display = "block";
     const name = inputName.value;
     const email = inputEmail.value;
     const password = inputPass.value;
     
     if (!validateEmail(email)) {
-      alert('El email debe contener "@" y "."');
+      alert('The email must contain: "@" y "."');
+      button.disabled = false;
+      spinner.style.display = "none";
       return;
     }
 
     if (!validatePassword(password)) {
-      alert('La contraseña debe tener al menos 8 caracteres, una mayúscula y un número');
+      alert('The password must be at least 8 characters long, an uppercase and a number');
+      button.disabled = false;
+      spinner.style.display = "none";
       return;
     }
 
     submitRegister(name, email, password).finally(() => {
       button.disabled = false;
+      spinner.style.display = "none";    
     });
   });
 };
@@ -134,6 +147,6 @@ const submitRegister = async (name, email, password) => {
   if (data && !data.error) {
     submitLogin(email, password);
   } else {
-    alert('Error al registrar' + (data.error || 'Error desconocido'));
+    alert('Error al registrar' + (data.error || 'Unknown error'));
   }
 };

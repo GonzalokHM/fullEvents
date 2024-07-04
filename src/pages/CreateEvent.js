@@ -11,12 +11,12 @@ export const CreateEvent = () => {
 
   const form = document.createElement("form");
   form.innerHTML = `
-    <h2>Crear Evento</h2>
-    <input type="text" name="title" placeholder="Título" required>
+    <h2>Create Event</h2>
+    <input type="text" name="title" placeholder="Title" required>
     <input type="datetime-local" name="date" required>
-    <input type="text" name="location" placeholder="Ubicación" required>
-    <textarea class="description" name="description" placeholder="Descripción" required></textarea>
-    <button type="submit">Crear</button>
+    <input type="text" name="location" placeholder="Location" required>
+    <textarea class="description" name="description" placeholder="Description" required></textarea>
+    <button type="submit">Create</button>
   `;
 
   form.addEventListener('submit', async (e) => {
@@ -28,10 +28,10 @@ export const CreateEvent = () => {
 
     const data = await createEventApi(title, date, location, description);
     if (data) {
-      alert('Evento creado exitosamente');
+      alert('Successfully created event');
       window.location.hash = '#/home';
     } else {
-      alert('Error al crear evento');
+      alert('Error creating event');
     }
   });
 

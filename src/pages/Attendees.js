@@ -22,7 +22,7 @@ export const Attendees = async () => {
               <h4>${attendee.name}</h4>
               <div class="attendee-details" style="display: none;">
                 <p>Email: ${attendee.email}</p>
-                <h5>Eventos:</h5>
+                <h5>Events:</h5>
                 <ul>
                   ${attendee.events.map(event => `
                     <li>
@@ -79,7 +79,7 @@ export const Attendees = async () => {
 
     renderAttendees(attendees);
   } catch (error) {
-    console.error('Error al cargar los asistentes:', error);
-    main.innerHTML = "<p>Error al cargar los asistentes.</p>";
+    console.error('Error loading attendees:', error);
+    main.innerHTML = "<p>Error loading attendees.</p>";
   }
 };
