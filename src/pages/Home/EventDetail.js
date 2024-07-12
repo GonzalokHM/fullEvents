@@ -1,12 +1,16 @@
-import { getEventById, confirmAttendance, getAttendeesByEventId, cancelAttendance } from '../api';
+import { getEventById, confirmAttendance, getAttendeesByEventId, cancelAttendance } from '../../api';
+import { renderEventDetail } from '../../utils/renders';
+import { LoginRegister } from '../LogRegister/LogRegister';
 
 export const EventDetails = async (id, backTo) => {
   if (!localStorage.getItem('token')) {
     LoginRegister();
     return;
   }
+
   const main = document.querySelector('main');
   main.innerHTML = '';
+
   try {
     const event = await getEventById(id);
 
@@ -18,21 +22,17 @@ export const EventDetails = async (id, backTo) => {
     const eventDiv = document.createElement('div');
     eventDiv.className = 'event-details';
     eventDiv.innerHTML = `
-    <button id="back-to-events" class="back-button">⬅ Back to Events</button>
-    <h3>${event.title}</h3>
-    <p>📆${event.date}</p>
-    <p>📍${event.location}</p>
-    <p>ℹ️${event.description}</p>
-    <button id="confirm-attendance">Confirm Attendance</button>
-    <button id="show-attendees">List of Attendees</button>
+      <button id="back-to-events" class="back-button">⬅ Back to Events</button>
+      ${renderEventDetail(event)}
+      <button id="confirm-attendance">Confirm Attendance</button>
+      <button id="show-attendees">List of Attendees</button>
       <div id="attendees-list" style="display: none;"></div>
-  `;
+    `;
     main.innerHTML = ''; // Limpiar el mensaje de carga
     main.appendChild(eventDiv);
 
     const confirmButton = document.getElementById('confirm-attendance');
 
-    // Función para actualizar la lista de asistentes
     const updateAttendeesList = async () => {
       const attendeesListDiv = document.getElementById('attendees-list');
       const attendees = await getAttendeesByEventId(id);
@@ -49,8 +49,6 @@ export const EventDetails = async (id, backTo) => {
       attendeesListDiv.style.display = 'block';
     };
 
-
-    // Verificar si el usuario ya ha confirmado su asistencia
     try {
       const attendees = await getAttendeesByEventId(id);
       const userEmail = JSON.parse(localStorage.getItem('user')).email;
@@ -76,24 +74,21 @@ export const EventDetails = async (id, backTo) => {
         confirmButton.style.backgroundColor = '';
         alert('Cancelled attendance');
       }
-      // Actualizar la lista de asistentes
       if (document.getElementById('attendees-list').style.display === 'block') {
         await updateAttendeesList();
       }
     });
 
-    document
-      .getElementById('show-attendees')
-      .addEventListener('click', async () => {
-        const attendeesListDiv = document.getElementById('attendees-list');
-        if (attendeesListDiv.style.display === 'none') {
-          await updateAttendeesList();
-        } else {
-          attendeesListDiv.style.display = 'none';
-        }
-      });
+    document.getElementById('show-attendees').addEventListener('click', async () => {
+      const attendeesListDiv = document.getElementById('attendees-list');
+      if (attendeesListDiv.style.display === 'none') {
+        await updateAttendeesList();
+      } else {
+        attendeesListDiv.style.display = 'none';
+      }
+    });
 
-      document.getElementById('back-to-events').addEventListener('click', backTo);
+    document.getElementById('back-to-events').addEventListener('click', backTo);
   } catch (error) {
     console.error('Event Loading Failed:', error);
     main.innerHTML = '<p>Event Loading Failed!</p>';

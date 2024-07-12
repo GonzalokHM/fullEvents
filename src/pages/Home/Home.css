@@ -1,0 +1,44 @@
+.organizer {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  cursor: pointer;
+}
+
+.organizer h4 {
+  margin: 0;
+}
+
+.events {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.event {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: calc(100% - 40px);
+  max-width: 300px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.event {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.event:last-of-type {
+  margin-bottom: 60px;
+}
+
+.event h3 h4 {
+  margin-top: 0;
+}
