@@ -1,6 +1,7 @@
 import { getEventById, confirmAttendance, getAttendeesByEventId, cancelAttendance } from '../../api';
 import { renderEventDetail } from '../../utils/renders';
 import { LoginRegister } from '../LogRegister/LogRegister';
+import './EventDetail.css'
 
 export const EventDetails = async (id, backTo) => {
   if (!localStorage.getItem('token')) {

@@ -48,3 +48,56 @@ header {
   nav a:hover {
     background-color: #45a049;
   }
+
+  @media (max-width: 768px) {
+    header {
+      padding: 10px 15px;
+    }
+    nav a {
+      margin: 5px;
+      padding: 8px 12px;
+    }
+  }
+
+  @media screen and (max-width: 530px) {
+    header {
+      padding: 10px;
+    }
+    .burger {
+      display: flex;
+    }
+   
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      position: absolute;
+      top: 50px;
+      left: 0;
+      background-color: #fff;
+    }
+  
+    .nav-links.nav-active {
+      display: flex;
+    }
+  
+    nav a {
+      margin: 5px 0;
+      text-align: center;
+      padding: 9px 10px;
+      color: #002f02;
+    }
+  
+    
+    .burger.toggle div:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    
+    .burger.toggle div:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .burger.toggle div:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+  }

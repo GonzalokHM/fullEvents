@@ -2,6 +2,7 @@ import { getAttendees, getAttendeesSortedByName } from '../../api';
 import { LoginRegister } from '../LogRegister';
 import { renderAttendees } from './render';
 import { createSpinner } from '../../utils/funtions';
+import './Attendees.css'
 
 export const Attendees = async () => {
   if (!localStorage.getItem('token')) {

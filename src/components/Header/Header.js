@@ -2,6 +2,7 @@ import { Home } from '../pages/Home';
 import { LoginRegister } from '../pages/LogRegister';
 import { CreateEvent } from '../pages/CreateEvent';
 import { Attendees } from '../pages/Attendees';
+import './Header.css'
 
 const routes = [
   { text: 'Home', func: Home },

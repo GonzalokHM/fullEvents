@@ -1,6 +1,7 @@
 import { createEventApi } from '../api';
 import { LoginRegister } from '../LogRegister/LogRegister';
 import { createInput, createTextarea, createForm, createSpinner, createButton } from '../../utils/funtions';
+import './createEvent.css'
 
 export const CreateEvent = () => {
   if (!localStorage.getItem('token')) {

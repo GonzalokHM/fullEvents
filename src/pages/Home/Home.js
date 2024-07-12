@@ -3,6 +3,7 @@ import { LoginRegister } from '../LogRegister/LogRegister';
 import { renderEventsList, renderOrganizers } from '../utils/render';
 import { attachEventDetailListeners, setupOrganizerListeners } from './setupListeners';
 import { createSpinner } from '../../utils/funtions';
+import './Home.css'
 
 export const Home = async () => {
   if (!localStorage.getItem('token')) {

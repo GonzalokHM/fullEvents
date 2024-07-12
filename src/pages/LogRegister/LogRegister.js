@@ -2,6 +2,7 @@ import { Home } from '../Home/Home';
 import { Header } from '../../components/Header/Header';
 import { registerApi, loginApi } from '../../api';
 import { createButton , createInput, createSpinner , createForm, validateEmail, validatePassword } from '../../utils/funtions';
+import './LogRegister.css'
 
 export const LoginRegister = (showLogin = true) => {
   const main = document.querySelector("main");

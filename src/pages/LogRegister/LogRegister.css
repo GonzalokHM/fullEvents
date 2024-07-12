@@ -13,6 +13,7 @@
   
   .auth-container button {
     margin-bottom: 20px;
+    width: 85%;
   }
   
   button:hover {
@@ -39,8 +40,4 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: center;
-  }
-  
-  form button {
-    width: 85%;
   }
